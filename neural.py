@@ -13,6 +13,7 @@ expectedResults = np.array([[0],[1],[1],[0]])
 graph_index = 0
 
 
+
 def createWeigth(elements, neuronsInHiddenLayers):
     return [
         np.random.random((len(elements[0]),neuronsInHiddenLayers)),
@@ -40,11 +41,13 @@ def feedforward(inputValues, activationFunction, weight1, weight2):
 
 
 
+
 def brainPower(inputs, wl0l1, wl1l2, learning_rate, activationFunction, iteration):
     errors = []
     for _ in range(iteration):
         res1, res2 = feedforward(inputs, activationFunction, wl0l1, wl1l2)
         delta_error = res2-expectedResults
+
         error = ((1/2)*(np.power((delta_error),2))) #??
         
         #backfeeding the error
@@ -64,8 +67,6 @@ def brainPower(inputs, wl0l1, wl1l2, learning_rate, activationFunction, iteratio
         
         res1, res2 = feedforward(inputs, activationFunction, wl0l1, wl1l2)
         
-        ##delta_error = res2-expectedResults
-        ##error = ((1/2)*(np.power((delta_error),2))) #??
         errors.append(sum(error))
         
     return errors
@@ -78,8 +79,8 @@ def brainPowerMomentum(inputs, wl0l1, wl1l2, learning_rate, activationFunction, 
     for _ in range(iteration):
         res1, res2 = feedforward(inputs, activationFunction, wl0l1, wl1l2)
         delta_error = res2-expectedResults
-        
-        error = ((1/2)*(np.power((delta_error),2))) #?? never used
+        error = ((1/2)*(np.power((delta_error),2))) 
+   
         
         #backfeeding the error
         ## output to hidden
@@ -99,17 +100,14 @@ def brainPowerMomentum(inputs, wl0l1, wl1l2, learning_rate, activationFunction, 
         wl0l1 = wl0l1 - previousDeltaHL
         wl1l2 = wl1l2 - previousDeltaOL
                 
-        ##res1, res2 = feedforward(inputs, activationFunction, wl0l1, wl1l2)
-        
-        ##delta_error = res2-expectedResults
-        ##error = ((1/2)*(np.power((delta_error),2))) #??
+
         errors.append(sum(error))
     return errors
+
     
     
 
 def test(learning_rate, iteration, hiddenLayerSize, inputs):
-
     errors = []
     witoh, whtoout = createWeigth(inputs, hiddenLayerSize)
     
@@ -171,5 +169,3 @@ test(0.5,300,7,inputs)
 test(0.5,300,7,inputs)
 test(0.75,300,7,inputs)
 test(1,300,7,inputs)
-
-"""
